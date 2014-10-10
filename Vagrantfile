@@ -34,7 +34,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # argument is a set of non-required options.
 
   # NFS configuration - NFS, for the most part will increase performance
-  # NOTE: A password will be prompted for OS X, not available on Windoze
+  # NOTE: A password will be prompted for OS X, not available on Windows
   config.vm.synced_folder "./", "/vagrant", :nfs => true
 
   # Non-NFS configuration
@@ -50,13 +50,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |vb|
 
       # set the memory limit
-      vb.customize ["modifyvm", :id, "--memory", "1024"]
+      vb.customize ["modifyvm", :id, "--memory", "512"]
 
       # set cpu max exection
       vb.customize ["modifyvm", :id, "--cpuexecutioncap", "95"]
 
       # enable more than 1 cpu on the virtual machine
-      vb.customize ["modifyvm", :id, "--cpus", "2"]
+      vb.customize ["modifyvm", :id, "--cpus", "1"]
 
       # if you are using a 64-bit OS, set --ioapic to on to enable a multi-cpu box
       # see http://stackoverflow.com/questions/17117063/how-can-i-create-a-vm-in-vagrant-with-virtualbox-with-two-cpus
