@@ -1,0 +1,11 @@
+#   ignore
+.DS_Store
+
+#	ignore vagrant folder
+.vagrant
+
+#	by default exclude wordpress uploads
+/wordpress/wp-content/uploads/*
+
+#	by default exclude wordpress plugins
+/wordpress/wp-content/plugins/*
