@@ -17,9 +17,10 @@ A Vagrant box provisioned to automatically install Apache, Mysql, php5, wordpres
 
 Make sure to have the latest version of [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) installed.
 
-*Tested with Vagrant version 1.6.3 and Virtualbox version 4.3.14*
+*Tested with Vagrant version 1.6.5 and Virtualbox version 4.3.16*
 
 There are two Vagrant plugins that will make your life a little easier.
+
 1. [Vagrant HostsUpdater](https://github.com/cogitatio/vagrant-hostsupdater)
   * This will automatically manage your hosts files as you vagrant up and down.
   * **Installation** `vagrant plugin install vagrant-hostsupdater`
