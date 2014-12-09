@@ -14,7 +14,7 @@ WP_URL="$VAGRANT_URL"
 WP_TITLE="WordPress Dev"
 WP_ADMIN_USER="admin"
 WP_ADMIN_PASSWORD="password"
-WP_ADMIN_EMAIL="rfmeier@gmail.com"
+WP_ADMIN_EMAIL="youremail@yourdomain.com"
 
 #
 #   Install development packages
@@ -42,12 +42,14 @@ install_packages(){
     echo "Installing additional tools..."
     echo "********************************************************************"
     echo " "
-    apt-get install -y build-essential, make
-    apt-get install -y nfs-common, portmap
+    apt-get install -y build-essential
+    apt-get install -y make
+    apt-get install -y nfs-common
+    apt-get install -y portmap
     apt-get install -y vim
-    apt-get install -y zip, unzip
+    apt-get install -y unzip
     apt-get install -y curl
-    apt-get install -y colordiff, git-core
+    apt-get install -y git-core
 
     echo " "
     echo "********************************************************************"
