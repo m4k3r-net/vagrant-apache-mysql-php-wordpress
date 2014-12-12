@@ -223,16 +223,16 @@ install_phpmyadmin(){
     if [[ ! -d /vagrant/phpmyadmin ]]; then
 
         #   get a copy of phpmyadmin
-        wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.2.7/phpMyAdmin-4.2.7-english.tar.gz
+        wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.3.2/phpMyAdmin-4.3.2-english.tar.gz
 
         #   decompress
-        tar -xzvf phpMyAdmin-4.2.7-english.tar.gz
+        tar -xzvf phpMyAdmin-4.3.2-english.tar.gz
 
         #   remove the old file
-        rm -rf phpMyAdmin-4.2.7-english.tar.gz
+        rm -rf phpMyAdmin-4.3.2-english.tar.gz
 
         #   move contnest to phpmyadmin
-        mv phpMyAdmin-4.2.7-english /vagrant/phpmyadmin
+        mv phpMyAdmin-4.3.2-english /vagrant/phpmyadmin
 
         #   if phpmyadmin config file exists...
         if [[ -f /vagrant/config/config.inc.php ]]; then
