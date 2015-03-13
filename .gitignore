@@ -9,3 +9,6 @@
 
 #	by default exclude wordpress plugins
 /wordpress/wp-content/plugins/*
+
+#   ignore the rakefile
+rakefile
