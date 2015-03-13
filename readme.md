@@ -5,10 +5,10 @@ A Vagrant box provisioned to automatically install Apache, Mysql, php5, wordpres
 ### Versions ###
 
 * linux - Ubuntu 12.04 LTS 64-bit
-* apache - 2.2
+* apache - 2.4.x
 * php - 5.4.x
 * mysql - 
-* phpmyadmin - 4.3.2
+* phpmyadmin - 4.3.11.x
 * wordpress - latest
 * phpunit - latest
 * wp-cli - latest
@@ -17,7 +17,7 @@ A Vagrant box provisioned to automatically install Apache, Mysql, php5, wordpres
 
 Make sure to have the latest version of [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) installed.
 
-*Tested with Vagrant version 1.7 and Virtualbox version 4.3.20*
+*Tested with Vagrant version 1.7.x and Virtualbox version 4.3.x
 
 There are two Vagrant plugins that will make your life a little easier.
 
