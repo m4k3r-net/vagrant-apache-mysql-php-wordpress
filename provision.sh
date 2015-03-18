@@ -32,7 +32,7 @@ install_packages(){
     apt-get install -y python-software-properties
 
     #   add repository for php 5.4
-    add-apt-repository -y ppa:ondrej/php5-oldstable
+    add-apt-repository -y ppa:ondrej/php5
 
     # run update since we added a new ppa
     apt-get update
@@ -50,6 +50,7 @@ install_packages(){
     apt-get install -y unzip
     apt-get install -y curl
     apt-get install -y git-core
+    apt-get install -y rake
 
     echo " "
     echo "********************************************************************"
@@ -112,22 +113,18 @@ install_packages(){
 #   Since xdebug is already compiled into php by default, we just have to
 #   enable html_errors in order to see the pretty output by xdebug.
 #
-enable_xdebug(){
-
-    #   create a variable for the php.ini path within /etc/php5/apache2
-    PHP_INI_PATH=$( find /etc/php5/apache2 -name "php.ini" )
+configure_php(){
 
     #   if valid php.ini path...
-    if [[ $PHP_INI_PATH ]]; then
+    if [[ -f /vagrant/config/php.ini ]]; then
 
-        #   turn on html errors
-        sed -i 's/html_errors = Off/html_errors = On/' $PHP_INI_PATH
-
-        #   set the timezone to America/Chicago
-        #   TODO: update timezone
-        #   sed -i 's/\;date.timezone =/date.timezone = America/Chicago/' $PHP_INI_PATH
+        # copy over the custom ini config file
+        cp /vagrant/config/php.ini /etc/php5/apache2/php.ini
 
     fi
+
+    # restart apache with our new .ini file
+    service apache2 restart
 
 }
 
@@ -183,19 +180,21 @@ package_cleanup(){
 
     fi
 
-    #   create a symlink for /vagrant/wordpress to point at /var/www
-    echo "Symlinking /vagrant/wordpress /var/www..."
-    ln -fs /vagrant/wordpress /var/www
-
     #   if the custom apache default file exists...
-    if [ -f /vagrant/config/default ]; then
+    if [ -f /vagrant/config/default.conf ]; then
 
         #   copy custom default file over
-        cp -v /vagrant/config/default /etc/apache2/sites-available/default
+        cp -v /vagrant/config/default.conf /etc/apache2/sites-available/default.conf
 
-        sed -i "s#VAGRANT_DOMAIN#${VAGRANT_DOMAIN}#g" /etc/apache2/sites-available/default
+        sed -i "s#VAGRANT_DOMAIN#${VAGRANT_DOMAIN}#g" /etc/apache2/sites-available/default.conf
 
     fi
+
+    # disable the default site
+    a2dissite 000-default
+
+    # enable our site
+    a2ensite default.conf
 
     #   restart apache to activate the php addons
     echo "Restarting apache..."
@@ -223,16 +222,16 @@ install_phpmyadmin(){
     if [[ ! -d /vagrant/phpmyadmin ]]; then
 
         #   get a copy of phpmyadmin
-        wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.3.2/phpMyAdmin-4.3.2-english.tar.gz
+        wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.3.12/phpMyAdmin-4.3.12-english.tar.gz
 
         #   decompress
-        tar -xzvf phpMyAdmin-4.3.2-english.tar.gz
+        tar -xzvf phpMyAdmin-4.3.12-english.tar.gz
 
         #   remove the old file
-        rm -rf phpMyAdmin-4.3.2-english.tar.gz
+        rm -rf phpMyAdmin-4.3.12-english.tar.gz
 
         #   move contnest to phpmyadmin
-        mv phpMyAdmin-4.3.2-english /vagrant/phpmyadmin
+        mv phpMyAdmin-4.3.12-english /vagrant/phpmyadmin
 
         #   if phpmyadmin config file exists...
         if [[ -f /vagrant/config/config.inc.php ]]; then
@@ -242,23 +241,19 @@ install_phpmyadmin(){
 
         fi
 
-        #   create a symlink for /vagrant/phpmyadmin to point at /var/phpmyadmin
-        echo "Symlinking /vagrant/phpmyadmin /var/phpmyadmin..."
-        ln -fs /vagrant/phpmyadmin /var/phpmyadmin
-
         #   if the custom apache default file exists...
-        if [[ -f /vagrant/config/phpmyadmin ]]; then
+        if [[ -f /vagrant/config/phpmyadmin.conf ]]; then
 
             #   copy custom default file over
-            cp -v /vagrant/config/phpmyadmin /etc/apache2/sites-available/phpmyadmin
+            cp -v /vagrant/config/phpmyadmin.conf /etc/apache2/sites-available/phpmyadmin.conf
 
-            sed -i "s#VAGRANT_DOMAIN#${VAGRANT_DOMAIN}#g" /etc/apache2/sites-available/phpmyadmin
+            sed -i "s#VAGRANT_DOMAIN#${VAGRANT_DOMAIN}#g" /etc/apache2/sites-available/phpmyadmin.conf
 
         fi
 
         #   enable phpmyadmin
         echo "enabling phpmyadmin..."
-        a2ensite phpmyadmin
+        a2ensite phpmyadmin.conf
 
         #   restart apache to activate the php addons
         echo "Restarting apache..."
@@ -297,7 +292,7 @@ if [[ ! -f ~/installed ]]; then
     install_packages
 
     #   configure php for xdebug
-    enable_xdebug
+    configure_php
 
     #   install phpunit
     install_phpunit

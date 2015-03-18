@@ -14,7 +14,7 @@ WP_URL="$VAGRANT_URL"
 WP_TITLE="WordPress Dev"
 WP_ADMIN_USER="admin"
 WP_ADMIN_PASSWORD="password"
-WP_ADMIN_EMAIL="rfmeier@gmail.com"
+WP_ADMIN_EMAIL="youremail@yourdomain.com"
 
 #
 #   Install wp-cli
@@ -153,7 +153,7 @@ install_wordpress_themes(){
     if [[ ! -f ~/wordpress_themes_installed ]]; then
 
         #   slug for theme to activate
-        default_theme="twentytwelve"
+        default_theme="twentyfifteen"
 
         #   update all themes
         wp theme update --all
