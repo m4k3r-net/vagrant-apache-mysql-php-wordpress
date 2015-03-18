@@ -82,10 +82,17 @@ define( 'WP_DEBUG', true );
 define( 'SCRIPT_DEBUG', true );
 define( 'CONCATENATE_SCRIPTS', false );
 define( 'SAVEQUERIES', true );
+
+//* disable auto updates
+define( 'AUTOMATIC_UPDATER_DISABLED', true );
 define( 'WP_AUTO_UPDATE_CORE', false );
 
-//	jetpack debug mode on
+//* set memory limit
+define( 'WP_MEMORY_LIMIT', '96M' );
 define( 'JETPACK_DEV_DEBUG', true );
+
+//* jetpack debug mode on
+define( 'WP_MAX_MEMORY_LIMIT', '128M' );
 
 /* That's all, stop editing! Happy blogging. */
 
