@@ -1,6 +1,6 @@
 # Vagrant Apache Mysql WordPress #
 
-A Vagrant box provisioned to automatically install Apache, Mysql, php5, wordpress, phpunit, wp-cli.  Wp-cli will also install default debuging plugins and import theme unit testing content.  Your hosts file (OS X and Linux) will automatically be updated to the specified domain allowing you to start developing right away.
+A Vagrant box provisioned to automatically install Apache, Mysql, php5, wordpress, phpunit, wp-cli, and php composer.  Wp-cli will also install default debuging plugins and import theme unit testing content.  Your hosts file (OS X and Linux) will automatically be updated to the specified domain allowing you to start developing right away.
 
 ### Versions ###
 
@@ -8,33 +8,20 @@ A Vagrant box provisioned to automatically install Apache, Mysql, php5, wordpres
 * apache - 2.4.x
 * php - 5.4.x
 * mysql - 
-* phpmyadmin - 4.3.11.x
+* phpmyadmin - 4.4.8
 * wordpress - latest
 * phpunit - latest
 * wp-cli - latest
+* composer - latest
 
-### Setup ###
+### Installation ###
 
-Make sure to have the latest version of [Vagrant](http://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/) installed.
+This will require the use of command line.  If you are not comfortable with command line, this may not be for you.
 
-*Tested with Vagrant version 1.7.x and Virtualbox version 4.3.x
-
-There are two Vagrant plugins that will make your life a little easier.
-
-1. [Vagrant HostsUpdater](https://github.com/cogitatio/vagrant-hostsupdater)
-  * This will automatically manage your hosts files as you vagrant up and down.
-  * **Installation** `vagrant plugin install vagrant-hostsupdater`
-2. [Vagrant VBGuest](https://github.com/dotless-de/vagrant-vbguest)
-  * This plugin will automatically install VirtualBox guest additions on the guest machine.
-  * **Installation** `vagrant plugin install vagrant-vbguest`
-
-Within your **Vagrantfile**, update the `config.vm.hostname` and `config.hostsupdater.aliases` to your desired domain.  Make sure the domain matches for both entries.
-
-```
-#   Vagrantfile
-
-# change to your custom domain
-config.vm.hostname = "wordpress.dev" 
-# change to your custom domain.  Should be the same domain as config.vm.hostname
-config.hostsupdater.aliases = ["phpmyadmin.wordpress.dev"] 
-```
+1. Install VirtualBox [VirtualBox](https://www.virtualbox.org/)
+2. Install Vagrant [Vagrant](http://www.vagrantup.com/)
+3. Install Vagrant plugin [Vagrant HostsUpdater](https://github.com/cogitatio/vagrant-hostsupdater) `vagrant plugin install vagrant-hostsupdater`
+4. Install Vagrant plugin [Vagrant VBGuest](https://github.com/dotless-de/vagrant-vbguest) `vagrant plugin install vagrant-vbguest`
+5. Clone this repo `git clone https://github.com/rfmeier/vagrant-apache-mysql-php-wordpress.git my-custom-directory-name`
+6. Move into the directory `cd my-custom-directory-name`
+7. Begin the build `vagrant up`
