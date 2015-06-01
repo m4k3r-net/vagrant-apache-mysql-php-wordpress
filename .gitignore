@@ -1,14 +1,19 @@
-#   ignore
 .DS_Store
 
-#	ignore vagrant folder
+# ignore vagrant folder
 .vagrant
 
-#	by default exclude wordpress uploads
+# ignore the backups directory
+/backups
+
+# ignore the wordpress directory
+/wordpress
+
+# ignore the phpmyadmin directory
+/phpmyadmin
+
+# by default exclude wordpress uploads
 /wordpress/wp-content/uploads/*
 
-#	by default exclude wordpress plugins
+# by default exclude wordpress plugins
 /wordpress/wp-content/plugins/*
-
-#   ignore the rakefile
-rakefile
