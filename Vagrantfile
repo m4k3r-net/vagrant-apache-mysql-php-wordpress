@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network :private_network, ip: "192.168.33.10"
+  config.vm.network :private_network, ip: "192.168.10.10"
   config.vm.hostname = "wordpress.dev"
   config.hostsupdater.aliases = ["phpmyadmin.wordpress.dev"]
 
@@ -50,7 +50,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |vb|
 
       # set the memory limit
-      vb.customize ["modifyvm", :id, "--memory", "512"]
+      vb.customize ["modifyvm", :id, "--memory", "1024"]
 
       # set cpu max exection
       vb.customize ["modifyvm", :id, "--cpuexecutioncap", "95"]
