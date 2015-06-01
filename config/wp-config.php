@@ -79,6 +79,7 @@ define('WPLANG', '');
  * in their development environments.
  */
 define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
 define( 'SCRIPT_DEBUG', true );
 define( 'CONCATENATE_SCRIPTS', false );
 define( 'SAVEQUERIES', true );
@@ -87,12 +88,14 @@ define( 'SAVEQUERIES', true );
 define( 'AUTOMATIC_UPDATER_DISABLED', true );
 define( 'WP_AUTO_UPDATE_CORE', false );
 
-//* set memory limit
+//* set memory limit to 96 megs
 define( 'WP_MEMORY_LIMIT', '96M' );
-define( 'JETPACK_DEV_DEBUG', true );
+
+//* increate admin memory limit to 128 megs
+define( 'WP_MAX_MEMORY_LIMIT', '128M' );
 
 //* jetpack debug mode on
-define( 'WP_MAX_MEMORY_LIMIT', '128M' );
+define( 'JETPACK_DEV_DEBUG', true );
 
 /* That's all, stop editing! Happy blogging. */
 
