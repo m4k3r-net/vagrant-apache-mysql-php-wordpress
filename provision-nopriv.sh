@@ -103,7 +103,7 @@ install_wordpress_plugins(){
     if [[ ! -f ~/wordpress_plugins_installed ]]; then
 
         # list of plugins to install
-        plugins=( "debug-bar" "debug-bar-constants" "tdd-debug-bar-post-meta" "debug-bar-screen-info" "debug-bar-super-globals" "debug-bar-actions-and-filters-addon" "regenerate-thumbnails" "wp-mail-smtp" )
+        plugins=( "debug-bar" "debug-bar-constants" "tdd-debug-bar-post-meta" "debug-bar-screen-info" "debug-bar-super-globals" "wp-mail-smtp" )
 
         # iterate through plugin zip file names...
         for i in "${plugins[@]}"
@@ -114,7 +114,7 @@ install_wordpress_plugins(){
         done
 
         # list of plugins to deactivate
-        deactivate_plugins=( "regenerate-thumbnails" "wp-mail-smtp" )
+        deactivate_plugins=( "wp-mail-smtp" )
 
         for d in "${deactivate_plugins[@]}"
         do
