@@ -31,8 +31,8 @@ install_packages(){
     # install package so we can add independent repositories
     apt-get install -y python-software-properties
 
-    # add repository for php 5.4
-    add-apt-repository -y ppa:ondrej/php5
+    # add repository for php 5.6
+    add-apt-repository ppa:ondrej/php5-5.6
 
     # run update since we added a new ppa
     apt-get update
