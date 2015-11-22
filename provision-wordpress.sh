@@ -103,7 +103,7 @@ install_wordpress_plugins(){
     if [[ ! -f ~/wordpress_plugins_installed ]]; then
 
         # list of plugins to install
-        plugins=( "debug-bar" "debug-bar-constants" "tdd-debug-bar-post-meta" "debug-bar-screen-info" "debug-bar-super-globals" "wp-mail-smtp" )
+        plugins=( "debug-bar" "debug-bar-constants" "tdd-debug-bar-post-meta" "debug-bar-screen-info" "debug-bar-super-globals" "wp-mail-smtp" "query-monitor" )
 
         # iterate through plugin zip file names...
         for i in "${plugins[@]}"
@@ -126,8 +126,8 @@ install_wordpress_plugins(){
         # uninstall 'Hello World' plugin
         wp plugin uninstall hello
 
-        # update all plugins
-        wp plugin update --all
+        # uninstall akismet
+        wp plugin uninstall akismet
 
         # show plugin status
         wp plugin status
@@ -149,9 +149,6 @@ install_wordpress_themes(){
 
         # slug for theme to activate
         default_theme="twentyfifteen"
-
-        # update all themes
-        wp theme update --all
 
         # activate the default theme
         wp theme activate "$default_theme"
@@ -219,7 +216,7 @@ import_wordpress_data(){
 #
 # Final cleanup function
 #
-provision_nopriv_cleanup(){
+wordpress_provision_cleanup(){
 
     # create generic installed file to know the install was already provision_cleanup() function was already ran
     echo "Creating generic 'no priveleges installed' flag file..."
@@ -245,6 +242,6 @@ if [[ ! -f ~/nopriv_installed ]]; then
 
     import_wordpress_data
 
-    provision_nopriv_cleanup
+    wordpress_provision_cleanup
 
 fi

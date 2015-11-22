@@ -1,19 +1,14 @@
+# OS X...
 .DS_Store
 
 # ignore vagrant folder
 .vagrant
 
-# ignore the backups directory
-/backups
+# ignore the content of the backups directory
+/backups/*
 
 # ignore the wordpress directory
 /wordpress
 
 # ignore the phpmyadmin directory
 /phpmyadmin
-
-# by default exclude wordpress uploads
-/wordpress/wp-content/uploads/*
-
-# by default exclude wordpress plugins
-/wordpress/wp-content/plugins/*

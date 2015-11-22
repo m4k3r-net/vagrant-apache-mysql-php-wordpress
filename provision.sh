@@ -21,20 +21,16 @@ WP_ADMIN_EMAIL="youremail@yourdomain.com"
 #
 install_packages(){
 
-    echo " "
-    echo "********************************************************************"
-    echo "Updating repository..."
-    echo "********************************************************************"
-    echo " "
+    # run update since we added a new ppa
     apt-get update
-
+    
     # install package so we can add independent repositories
     apt-get install -y python-software-properties
 
-    # add repository for php 5.6
+    # add repository ppa for php 5.6
     add-apt-repository ppa:ondrej/php5-5.6
-
-    # run update since we added a new ppa
+    
+    # re-run the repository update
     apt-get update
 
     echo " "
@@ -53,15 +49,65 @@ install_packages(){
     apt-get install -y rake
     apt-get install -y subversion
 
+}
+
+#
+# Install apache
+#
+install_apache(){
+
     echo " "
     echo "********************************************************************"
     echo "Installing Apache..."
     echo "********************************************************************"
     echo " "
-    apt-get install -y apache2
+    apt-get install -y apache2=2.2.22-1ubuntu1.10
 
     # enable mod_rewrite
     a2enmod rewrite
+
+}
+
+configure_sites(){
+
+    # remove the default /var/www directory
+    echo "Removing /var/www for symlink..."
+    rm -rf /var/www
+
+    # if wordpress directory does not exist...
+    if [[ ! -d /vagrant/wordpress ]]; then
+
+        # create the wordpress directory
+        mkdir -p /vagrant/wordpress
+
+    fi
+
+    # if the custom apache default file exists...
+    if [[ -f /vagrant/config/default.conf ]]; then
+
+        # copy custom default file over
+        cp -v /vagrant/config/default.conf /etc/apache2/sites-available/default.conf
+
+        sed -i "s#VAGRANT_DOMAIN#${VAGRANT_DOMAIN}#g" /etc/apache2/sites-available/default.conf
+
+    fi
+
+    # disable the default site
+    a2dissite 000-default
+
+    # enable our site
+    a2ensite default.conf
+
+    # restart apache to activate the php addons
+    echo "Restarting apache..."
+    service apache2 restart
+
+}
+
+#
+# Install mysql
+#
+install_mysql(){
 
     echo " "
     echo "********************************************************************"
@@ -89,6 +135,13 @@ install_packages(){
 
     # comment out skip-external-locking
     sed -i 's/skip-external-locking/#skip-external-locking/'  /etc/mysql/my.cnf
+
+}
+
+#
+# Install php5
+#
+install_php(){
 
     echo " "
     echo "********************************************************************"
@@ -167,60 +220,6 @@ install_composer(){
 }
 
 #
-# This function will run after setup().
-#
-package_cleanup(){
-
-    echo " "
-    echo "********************************************************************"
-    echo "Running package package cleanup..."
-    echo "********************************************************************"
-    echo " "
-
-    # fix packages... if necessary and clean out cache
-    echo "Fixing packages..."
-    apt-get -f -y install
-    apt-get clean
-
-    # remove the default /var/www directory
-    echo "Removing /var/www for symlink..."
-    rm -rf /var/www
-
-    # if wordpress directory does not exist...
-    if [ ! -d /vagrant/wordpress ]; then
-
-        # create the wordpress directory
-        mkdir -p /vagrant/wordpress
-
-    fi
-
-    # if the custom apache default file exists...
-    if [ -f /vagrant/config/default.conf ]; then
-
-        # copy custom default file over
-        cp -v /vagrant/config/default.conf /etc/apache2/sites-available/default.conf
-
-        sed -i "s#VAGRANT_DOMAIN#${VAGRANT_DOMAIN}#g" /etc/apache2/sites-available/default.conf
-
-    fi
-
-    # disable the default site
-    a2dissite 000-default
-
-    # enable our site
-    a2ensite default.conf
-
-    # restart apache to activate the php addons
-    echo "Restarting apache..."
-    service apache2 restart
-
-    # restart mysql
-    echo "Restarting mysql..."
-    service mysql restart
-
-}
-
-#
 # Install phpmyadmin
 #
 install_phpmyadmin(){
@@ -281,18 +280,15 @@ install_phpmyadmin(){
 #
 provision_cleanup(){
 
-    # if the phpinfo source file exists and has yet been moved...
-    if [ -f /vagrant/config/phpinfo.php -a ! -f /vagrant/wordpress/phpinfo.php ]; then
+    # fix packages... if necessary and clean out cache
+    echo "Fixing packages..."
+    apt-get -f -y install
+    apt-get clean
 
-        # move phpinfo.php into wordpress directory
-        cp /vagrant/config/phpinfo.php /vagrant/wordpress/phpinfo.php
+    # restart mysql
+    echo "Restarting mysql..."
+    service mysql restart
 
-        # move phpinfo.php into phpmyadmin directory
-        cp /vagrant/config/phpinfo.php /vagrant/phpmyadmin/phpinfo.php
-
-    fi
-
-    # create generic installed file to know the install was already provision_cleanup() function was already ran
     echo "Creating generic 'installed' flag file..."
     touch ~/installed
 
@@ -304,6 +300,18 @@ if [[ ! -f ~/installed ]]; then
     # install devlopment packages
     install_packages
 
+    # install apache web server
+    install_apache
+
+    # configure websites
+    configure_sites
+
+    # install mysql
+    install_mysql
+
+    # install php5
+    install_php
+
     # configure php for xdebug
     configure_php
 
@@ -312,9 +320,6 @@ if [[ ! -f ~/installed ]]; then
 
     # install composer
     install_composer
-
-    # run the package_cleanup function
-    package_cleanup
 
     # install phpmyadmin
     install_phpmyadmin
