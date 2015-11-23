@@ -61,7 +61,7 @@ install_apache(){
     echo "Installing Apache..."
     echo "********************************************************************"
     echo " "
-    apt-get install -y apache2=2.2.22-1ubuntu1.10
+    apt-get install -y apache2
 
     # enable mod_rewrite
     a2enmod rewrite
