@@ -6,9 +6,9 @@ A Vagrant box provisioned to automatically install Apache, Mysql, php5, wordpres
 
 * linux - Ubuntu 12.04 LTS 64-bit
 * apache - 2.4.x
-* php - 5.4.x
+* php - 5.6.x
 * mysql - 
-* phpmyadmin - 4.4.8
+* phpmyadmin - 4.5.1
 * wordpress - latest
 * phpunit - latest
 * wp-cli - latest

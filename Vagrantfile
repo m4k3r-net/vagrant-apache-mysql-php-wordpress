@@ -26,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Execute the boostrap.sh shell file
   config.vm.provision :shell, :path => "provision.sh", :args => config.vm.hostname
-  config.vm.provision :shell, :path => "provision-nopriv.sh", :privileged => false, :args => config.vm.hostname
+  config.vm.provision :shell, :path => "provision-wordpress.sh", :privileged => false, :args => config.vm.hostname
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
@@ -56,7 +56,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--cpuexecutioncap", "95"]
 
       # enable more than 1 cpu on the virtual machine
-      vb.customize ["modifyvm", :id, "--cpus", "1"]
+      vb.customize ["modifyvm", :id, "--cpus", "2"]
 
       # if you are using a 64-bit OS, set --ioapic to on to enable a multi-cpu box
       # see http://stackoverflow.com/questions/17117063/how-can-i-create-a-vm-in-vagrant-with-virtualbox-with-two-cpus
