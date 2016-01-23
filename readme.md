@@ -8,7 +8,7 @@ A Vagrant box provisioned to automatically install Apache, Mysql, php5, wordpres
 * apache - 2.4.x
 * php - 5.6.x
 * mysql - 
-* phpmyadmin - 4.5.1
+* phpmyadmin - 4.5.3.1
 * wordpress - latest
 * phpunit - latest
 * wp-cli - latest
