@@ -21,16 +21,13 @@ WP_ADMIN_EMAIL="youremail@yourdomain.com"
 #
 install_packages(){
 
-    # run update since we added a new ppa
-    apt-get update
-    
     # install package so we can add independent repositories
-    apt-get install -y python-software-properties
+    apt-get install -y language-pack-en-base
 
-    # add repository ppa for php 5.6
-    add-apt-repository ppa:ondrej/php5-5.6
-    
-    # re-run the repository update
+    # add the 3rd party repo for php
+    add-apt-repository ppa:ondrej/php
+
+    # run update since we added a new ppa
     apt-get update
 
     echo " "
@@ -127,7 +124,7 @@ install_mysql(){
     # grant admin privileges
     mysql -uroot -proot_password -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root_password' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
-    # create wordpress database
+    # create 'wordpress' database
     mysql -uroot -proot_password -e "CREATE DATABASE wordpress;"
 
     # set bind address value to 0.0.0.0 from 127.0.0.1
@@ -148,15 +145,16 @@ install_php(){
     echo "Intsalling PHP and extensions..."
     echo "********************************************************************"
     echo " "
-    apt-get install -y php5
-    apt-get install -y php5-common
-    apt-get install -y php5-dev
-    apt-get install -y libapache2-mod-php5
-    apt-get install -y php5-mcrypt
-    apt-get install -y php5-curl
-    apt-get install -y php5-gd
-    apt-get install -y php5-xdebug
-    apt-get install -y php5-mysql
+    apt-get install -y php7.0
+    apt-get install -y php7.0-common
+    apt-get install -y php7.0-dev
+    apt-get install -y libapache2-mod-php7.0
+    apt-get install -y php7.0-mcrypt
+    apt-get install -y php7.0-curl
+    apt-get install -y php7.0-gd
+    apt-get install -y php7.0-xdebug
+    apt-get install -y php7.0-mysql
+    apt-get install -y php7.0-mbstring
     apt-get install -y php-pear
 
 }
@@ -173,7 +171,7 @@ configure_php(){
     if [[ -f /vagrant/config/php.ini ]]; then
 
         # copy over the custom ini config file
-        cp /vagrant/config/php.ini /etc/php5/apache2/php.ini
+        cp /vagrant/config/php.ini /etc/php/7.0/apache2/php.ini
 
     fi
 
@@ -234,16 +232,16 @@ install_phpmyadmin(){
     if [[ ! -d /vagrant/phpmyadmin ]]; then
 
         # get a copy of phpmyadmin
-        wget https://files.phpmyadmin.net/phpMyAdmin/4.5.1/phpMyAdmin-4.5.1-english.tar.gz --no-check-certificate
+        wget https://files.phpmyadmin.net/phpMyAdmin/4.6.2/phpMyAdmin-4.6.2-english.tar.gz --no-check-certificate
 
         # decompress
-        tar -xzvf phpMyAdmin-4.5.1-english.tar.gz
+        tar -xzvf phpMyAdmin-4.6.2-english.tar.gz
 
         # remove the old file
-        rm -rf phpMyAdmin-4.5.1-english.tar.gz
+        rm -rf phpMyAdmin-4.6.2-english.tar.gz
 
         # move contnest to phpmyadmin
-        mv phpMyAdmin-4.5.1-english /vagrant/phpmyadmin
+        mv phpMyAdmin-4.6.2-english /vagrant/phpmyadmin
 
         # if phpmyadmin config file exists...
         if [[ -f /vagrant/config/config.inc.php ]]; then

@@ -11,7 +11,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "ubuntu/trusty64"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
@@ -53,10 +53,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--memory", "1024"]
 
       # set cpu max exection
-      vb.customize ["modifyvm", :id, "--cpuexecutioncap", "95"]
+      vb.customize ["modifyvm", :id, "--cpuexecutioncap", "99"]
 
       # enable more than 1 cpu on the virtual machine
-      vb.customize ["modifyvm", :id, "--cpus", "2"]
+      vb.customize ["modifyvm", :id, "--cpus", "1"]
 
       # if you are using a 64-bit OS, set --ioapic to on to enable a multi-cpu box
       # see http://stackoverflow.com/questions/17117063/how-can-i-create-a-vm-in-vagrant-with-virtualbox-with-two-cpus
