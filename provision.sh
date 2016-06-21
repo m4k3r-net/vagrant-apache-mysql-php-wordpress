@@ -232,6 +232,7 @@ install_phpmyadmin(){
     if [[ ! -d /vagrant/phpmyadmin ]]; then
 
         # get a copy of phpmyadmin
+
         wget https://files.phpmyadmin.net/phpMyAdmin/4.6.2/phpMyAdmin-4.6.2-english.tar.gz --no-check-certificate
 
         # decompress
